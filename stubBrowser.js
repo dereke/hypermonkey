@@ -26,5 +26,4 @@ if (!isBrowser) {
     }
   };
 }
-
-export default isBrowser;
+module.exports = isBrowser;

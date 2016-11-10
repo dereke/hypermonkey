@@ -1,7 +1,7 @@
-import hyperdom from 'hyperdom';
-import runningInBrowser from './stubBrowser';
-import createBrowser from 'browser-monkey/create';
-import vquery from 'vdom-query';
+var hyperdom = require('hyperdom');
+var runningInBrowser = require('./stubBrowser');
+var createBrowser = require('browser-monkey/create');
+var vquery = require('vdom-query');
 
 function addRefreshButton() {
   var refreshLink = document.createElement('a');
@@ -28,7 +28,7 @@ if (runningInBrowser) {
   }
 }
 
-export default function(app) {
+module.exports = function(app) {
   var browser;
 
   if (runningInBrowser) {
