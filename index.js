@@ -1,7 +1,9 @@
 var hyperdom = require('hyperdom');
-var runningInBrowser = require('./stubBrowser');
+var runningInBrowser = !require('is-node');
 var createBrowser = require('browser-monkey/create');
 var vquery = require('vdom-query');
+var window = require('global');
+var document = window.document;
 
 function addRefreshButton() {
   var refreshLink = document.createElement('a');
@@ -26,6 +28,8 @@ if (runningInBrowser) {
     localStorage['debug'] = 'browser-monkey';
     addRefreshButton();
   }
+} else {
+  require('./stubBrowser');
 }
 
 module.exports = function(app) {
@@ -34,15 +38,13 @@ module.exports = function(app) {
   if (runningInBrowser) {
     browser = createBrowser(document.body);
     hyperdom.append(createTestDiv(), app);
-    console.log('appended')
   } else {
     var vdom = hyperdom.html('body');
 
     browser = createBrowser(vdom);
     browser.set({$: vquery, visibleOnly: false, document: {}});
 
-    hyperdom.appendVDom(vdom, app, { requestRender: setTimeout });
+    hyperdom.appendVDom(vdom, app, { requestRender: setTimeout, window: window });
   }
   return browser;
 }
-

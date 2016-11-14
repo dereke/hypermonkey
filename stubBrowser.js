@@ -1,29 +1,27 @@
-var isBrowser = typeof window !== 'undefined';
+var window = require('global');
 
+
+var registeredEvents = {};
 var pushState, replaceState;
 
 pushState = replaceState = function(state, title, url) {
   window.location.pathname = url;
-  (window.__registeredEvents['onpopstate'] || []).forEach(cb => cb({}));
+  (registeredEvents['onpopstate'] || []).forEach(cb => cb({}));
 };
 
-if (!isBrowser) {
-  global.window = {
-    location: {
-      pathname: '/',
-      search: ''
-    },
-    __registeredEvents: {},
-    history: {
-      pushState,
-      replaceState,
-    },
-    addEventListener(eventName, cb) {
-      if (!this.__registeredEvents[eventName]) {
-        this.__registeredEvents[eventName] = [];
-      }
-      this.__registeredEvents[eventName].push(cb);
-    }
-  };
-}
-module.exports = isBrowser;
+window.location = window.location || {};
+window.location.pathname = window.location.pathname || '/';
+window.location.origin = window.location.origin || '';
+window.location.search = window.location.search || '';
+window.history = {
+  pushState,
+  replaceState,
+};
+
+window.addEventListener = function(eventName, cb) {
+  eventName = 'on'+eventName;
+  if (!registeredEvents[eventName]) {
+    registeredEvents[eventName] = [];
+  }
+  registeredEvents[eventName].push(cb);
+};
