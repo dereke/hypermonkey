@@ -4,7 +4,8 @@
   "description": "Mount a hyperdom app and hook it up to browser-monkey",
   "main": "index.js",
   "scripts": {
-    "test": "mocha example.js --compilers js:babel-core/register"
+    "test": "mocha example.js --compilers js:babel-core/register",
+    "release-patch": "npm version patch && git push origin master && git push origin --tags && npm publish"
   },
   "keywords": [
     "hyperdom",
@@ -22,13 +23,13 @@
     "babel-preset-react": "^6.16.0",
     "babel-runtime": "^6.11.6",
     "babelify": "^7.3.0",
-    "browser-monkey": "featurist/browser-monkey",
+    "browser-monkey": "github:featurist/browser-monkey",
     "global": "^4.3.1",
     "hyperdom": "^0.2.0",
     "hyperdom-router": "github:featurist/plastiq-router#hyperdomify",
     "is-node": "^1.0.2",
-    "vdom-query": "featurist/vdom-query",
-    "vinehill": "github:dereke/vinehill"
+    "vdom-query": "github:featurist/vdom-query",
+    "vinehill": "0.0.4"
   },
   "browserify": {
     "transform": [
@@ -39,5 +40,13 @@
     "express": "^4.14.0",
     "httpism": "^2.4.2",
     "mocha": "^3.1.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dereke/hypermonkey.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dereke/hypermonkey/issues"
+  },
+  "homepage": "https://github.com/dereke/hypermonkey#readme"
 }
