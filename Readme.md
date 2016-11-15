@@ -3,7 +3,7 @@ Test your hyperdom apps using browser-monkey and vinehill with just a few lines 
 
 # Get started
 
-```
+```javascript
 /** @jsx hyperdom.jsx */
 var window = require('global');
 
