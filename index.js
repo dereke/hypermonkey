@@ -2,6 +2,8 @@ var hyperdom = require('hyperdom');
 var runningInBrowser = !require('is-node');
 var createBrowser = require('browser-monkey/create');
 var vquery = require('vdom-query');
+var VineHill = require('vinehill');
+var router = require('hyperdom-router');
 var window = require('global');
 var document = window.document;
 
@@ -32,19 +34,50 @@ if (runningInBrowser) {
   require('./stubBrowser');
 }
 
-module.exports = function(app) {
-  var browser;
+function HyperMonkey() {
+  this.vinehill = new VineHill();
+}
+
+HyperMonkey.prototype.setOrigin = function(host) {
+  this.vinehill.setOrigin(host);
+  return this;
+}
+
+HyperMonkey.prototype.withServer = function(host, app) {
+  this.vinehill.add(host, app);
+
+  return this;
+}
+
+HyperMonkey.prototype.withApp = function(getApp) {
+  this.getApp = getApp;
+  return this;
+}
+
+HyperMonkey.prototype.start = function() {
+  router.start();
+  this.vinehill.start();
+  var app = this.getApp(router);
 
   if (runningInBrowser) {
-    browser = createBrowser(document.body);
+    this.browser = createBrowser(document.body);
     hyperdom.append(createTestDiv(), app);
   } else {
     var vdom = hyperdom.html('body');
 
-    browser = createBrowser(vdom);
-    browser.set({$: vquery, visibleOnly: false, document: {}});
+    this.browser = createBrowser(vdom);
+    this.browser.set({$: vquery, visibleOnly: false, document: {}});
 
     hyperdom.appendVDom(vdom, app, { requestRender: setTimeout, window: window });
   }
-  return browser;
+  return this;
+}
+
+HyperMonkey.prototype.stop = function(){
+  router.clear();
+  this.vinehill.stop();
+}
+
+module.exports = function() {
+  return new HyperMonkey();
 }

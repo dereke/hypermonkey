@@ -4,7 +4,7 @@
   "description": "Mount a hyperdom app and hook it up to browser-monkey",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha example.js --compilers js:babel-core/register"
   },
   "keywords": [
     "hyperdom",
@@ -25,12 +25,19 @@
     "browser-monkey": "featurist/browser-monkey",
     "global": "^4.3.1",
     "hyperdom": "^0.2.0",
+    "hyperdom-router": "github:featurist/plastiq-router#hyperdomify",
     "is-node": "^1.0.2",
-    "vdom-query": "featurist/vdom-query"
+    "vdom-query": "featurist/vdom-query",
+    "vinehill": "github:dereke/vinehill"
   },
   "browserify": {
     "transform": [
       "babelify"
     ]
+  },
+  "devDependencies": {
+    "express": "^4.14.0",
+    "httpism": "^2.4.2",
+    "mocha": "^3.1.2"
   }
 }
