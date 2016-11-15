@@ -5,7 +5,6 @@ Test your hyperdom apps using browser-monkey and vinehill with just a few lines 
 
 ```javascript
 /** @jsx hyperdom.jsx */
-var window = require('global');
 
 // --------- your express app --------- 
 var expressApp = (require('express'))();

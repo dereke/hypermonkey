@@ -1,5 +1,4 @@
 /** @jsx hyperdom.jsx */
-var window = require('global');
 
 // --------- your express app --------- 
 var expressApp = (require('express'))();
