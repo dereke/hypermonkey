@@ -1,6 +1,6 @@
 {
   "name": "hypermonkey",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Mount a hyperdom app and hook it up to browser-monkey",
   "main": "index.js",
   "scripts": {
