@@ -19,7 +19,7 @@
     "hyperdom": "*",
     "hyperdom-router": "github:featurist/plastiq-router#hyperdomify",
     "vdom-query": "github:featurist/vdom-query",
-    "vinehill": "0.0.4"
+    "vinehill": "*"
   },
   "dependencies": {
     "global": "4.3.1",
@@ -45,7 +45,7 @@
     "hyperdom-router": "github:featurist/plastiq-router#hyperdomify",
     "mocha": "^3.1.2",
     "vdom-query": "github:featurist/vdom-query",
-    "vinehill": "0.0.4"
+    "vinehill": "0.3.0"
   },
   "repository": {
     "type": "git",

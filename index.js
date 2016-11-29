@@ -58,6 +58,7 @@ HyperMonkey.prototype.start = function() {
   router.start();
   this.vinehill.start();
   var app = this.getApp(router);
+  this.app = app;
 
   if (runningInBrowser) {
     this.browser = createBrowser(document.body);

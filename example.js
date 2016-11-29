@@ -1,6 +1,6 @@
 /** @jsx hyperdom.jsx */
 
-// --------- your express app --------- 
+// --------- your express app ---------
 var expressApp = (require('express'))();
 expressApp.get('/api/frameworks', (req, res) => {
   res.json([
@@ -10,7 +10,7 @@ expressApp.get('/api/frameworks', (req, res) => {
   ]);
 });
 
-// --------- your hyperdom app --------- 
+// --------- your hyperdom app ---------
 var httpism = require('httpism/browser');
 var hyperdom = require('hyperdom');
 var html = hyperdom.html;
@@ -33,22 +33,26 @@ class WebApp {
     this.model.refresh = html.refresh;
 
     return <ul>
-      {this.model.frameworks.map(name => <li>{name}</li>)}  
+      {this.model.frameworks.map(name => <li>{name}</li>)}
     </ul>
   }
 }
 
 
-// --------- your tests --------- 
+// --------- your tests ---------
 var hypermonkey = require('.');
+var expect = require('chai').expect
 
 describe('my awesome app', () => {
-  var monkey;
+  var monkey, app;
 
   beforeEach(() => {
     monkey = hypermonkey()
       .withServer('http://localhost:1234', expressApp)
-      .withApp(() => new WebApp())
+      .withApp(() => {
+        app = new WebApp();
+        return app;
+      })
       .start();
   });
 
@@ -60,5 +64,9 @@ describe('my awesome app', () => {
       'hyperdom',
       'vinehill',
     ]})
+  });
+
+  it('exposes the app', () => {
+    expect(monkey.app).to.equal(app);
   });
 });
